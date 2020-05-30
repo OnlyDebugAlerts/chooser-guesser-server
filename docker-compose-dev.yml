@@ -1,0 +1,37 @@
+version: '3'
+services:
+  chooser-guesser-ui-mongodb:
+    container_name: chooser-guesser-ui-mongodb-container
+    image: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: chooser-guesser-ui
+    networks:
+      - chooser-guesser-ui
+    volumes:
+      - chooser-guesser-ui-mongodb-data:/var/lib/mongodb/chooser-guesser-ui/data
+    ports:
+      - 27029:27018
+
+  chooser-guesser-ui-redis:
+    container_name: chooser-guesser-ui-redis-container
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - chooser-guesser-ui-redis-data:/var/lib/redis/chooser-guesser-ui/data
+    networks:
+      - chooser-guesser-ui
+    ports:
+      - 6389:6380
+    depends_on:
+      - chooser-guesser-ui-mongodb
+
+networks:
+  chooser-guesser-ui:
+    driver: bridge
+
+volumes:
+  chooser-guesser-ui-mongodb-data:
+  chooser-guesser-ui-redis-data:
