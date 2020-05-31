@@ -13,7 +13,7 @@ services:
     volumes:
       - chooser-guesser-ui-mongodb-data:/var/lib/mongodb/chooser-guesser-ui/data
     ports:
-      - 27029:27018
+      - 27027:27018
 
   chooser-guesser-ui-redis:
     container_name: chooser-guesser-ui-redis-container
